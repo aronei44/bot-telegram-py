@@ -1,0 +1,12 @@
+name: python_bot_telegram
+description: Bot telegram
+ignoreFiles: .git venv
+modules:
+- name: python_bot_telegram
+  language: python3.9
+  web: django
+  description: Module description
+  functions:
+  - name: entry
+    entry: main.py
+    description: the entry point for the function
