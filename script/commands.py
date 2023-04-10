@@ -5,6 +5,14 @@ import logging
 from helpers import load_from_update
 from sqlalchemy import text
 from database import session
+from script.coreapi import *
+import os
+import json
+from dotenv import load_dotenv
+load_dotenv()
+
+FE_URL = os.getenv('FE_AUTH_URL')
+
 # Enable logging
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
@@ -70,3 +78,22 @@ async def stats(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         response,
         reply_markup=ForceReply(selective=True),
     )
+
+async def register(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Send a message when the command /start is issued."""
+    data = load_from_update(update)
+    user = data['user']
+    dataLog = await getToken(user['id'], user['username'])
+    if dataLog['status'] != 201:
+        await update.message.reply_html(
+            "error occured or telegram user id has been registered",
+            reply_markup=ForceReply(selective=True),
+        )
+    text = f"""
+{dataLog['data']['message']}
+{FE_URL}{dataLog['data']['data']['register_token']}
+    """
+    await context.bot.send_message(
+        chat_id=update.message.from_user.id,
+        text=text,
+        parse_mode='HTML')
