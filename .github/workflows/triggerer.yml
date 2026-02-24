@@ -1,0 +1,13 @@
+name: JCC Bot Deployment
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  trigger:
+    name: Trigger Deploy Bot
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call Jenkins
+        run: curl --user "deployer:${{ secrets.JENKINS_PWD }}" https://jenkins.digitalservice.id/${{ secrets.JENKINS_TOKEN }}

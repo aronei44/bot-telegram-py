@@ -11,9 +11,23 @@ services:
       - bot
     environment:
       API_KEY: ${API_KEY}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_NAME: ${DB_NAME}
+      DB_CLUSTER: ${DB_CLUSTER}
+      API_URL: ${API_URL}
+      FE_AUTH_URL: ${FE_AUTH_URL}
+      API_ID: ${API_ID}
+      API_HASH: ${API_HASH}
+      USERNAME: ${USERNAME}
+      PHONE: ${PHONE}
     ports:
-      - 80:80
-      - 443:443
+      # - 80:80
+      # - 443:443
+      - 8855:80
+      - 8888:443
     volumes:
       - ./script:/script
 

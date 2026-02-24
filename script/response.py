@@ -5,9 +5,9 @@ from datetime import datetime
 import psycopg2
 
 
-def logger(id, message) -> None:
+def logger(id, message, user_id, date = datetime.now()) -> None:
     try:
-        data = MessageLogs(id, message, datetime.now(), message['user']['id'])
+        data = MessageLogs(id, {"text":message}, date, user_id)
         session.add(data)
         session.commit()
     except Exception as e:
@@ -28,5 +28,5 @@ def saveuser(user) -> None:
 
 def response(input_text) -> str:
     saveuser(input_text['user'])
-    logger(input_text['message_id'], input_text)
+    logger(input_text['message_id'], input_text['text'], input_text['user']['id'])
     return str(input_text)
